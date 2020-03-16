@@ -10,8 +10,6 @@ A simple interface for coronavirus updates in the context of Australia. This is 
 #child of the analysis??
 ```
 
-
-
 ## File structure
 
 ```{r}
@@ -27,36 +25,18 @@ A simple interface for coronavirus updates in the context of Australia. This is 
  ┗ 📜README.md
 ```
 
-### `data/`
-
-Datasets used for the project from the raw data and any modifications done to generate the dataset needed for the analysis. The code for these scripts are in the `R` folder.
-
-### `R/`
+### `./R/`
 
 Scripts and analysis code
 
-### `docs/`
+### `./docs/`
 
 Output documents for all the work done in this repository.
 
-### `vignettes/`
+### `./vignettes/`
 
 Working documents and ideas. This ends up being the appendix files in a manuscript commonly.
 
 ### `index.html`
 
 This file is the most important file when generating web content.
-
-Other shiny apps for COVID19
-
-### Example 1
-
-<iframe src="https://shiny.john-coene.com/coronavirus/" width="100%" height="400px">
-
-</iframe>
-
-### Example 2
-
-<iframe src="http://www.bcloud.org/e/" width="100%" height="400px">
-
-</iframe>
