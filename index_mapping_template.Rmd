@@ -1,0 +1,350 @@
+---
+title: "Simple beech mapping"
+author: "Anthony Davidson"
+date: "13/10/2019"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+bibliography: ["Beech-forests.bib", "references.bib"]
+editor_options: 
+  chunk_output_type: console
+---
+
+*[full plots coming soon...March 2020]*
+
+# Overview {#over}
+
+_Orginal post by Dominik Schneider_ [CougRstats](https://cougrstats.wordpress.com/)
+
+A couple things to note from others in the field of Spatial/gis. Functions in `R` are undergoing a massive change right now. The old stalwart `sp` has been succeeded by `sf` (simple features), which is compatible with the open geospatial consortium standards. When you are looking for solutions online, make sure you know which data type is being used- **they are not interchangeable.** Key points:
+
+  1. You can convert from `sf` to `sp` with `as(x,'Spatial')` and vice versa with `st_as_sf()`. 
+  
+  2. Stick with `sf` whenever possible, it is the future. `sf` is designed to be more consistent in syntax, tidy, and feature rich (it does everything `rgdal`, `rgeos`, and `sp` do/did).
+
+  3. `sf` is specific to vector data (points, lines, polygons). Gridded raster data is still served by `raster`. Unfortunately, they are not really compatible so if you need to mix them, you will need to convert your `sf` objects to `sp` objects. This should mostly only be the case for analysis because there are mapping packages that handle both. Keep your eye on `star` as an upcoming successor of the `raster` package.
+
+  4. If you do need to mix vector and raster data, I think it’s still worth doing any vector operations with `sf` and then convert to `sp` at the end. I believe many of the `sf` tools are written in c++ to be as efficient as possible. For polygon/raster conversions, check out [fasterize](https://cran.r-project.org/web/packages/fasterize/) and [spex](https://mdsumner.github.io/spex/index.html) for more efficient implementations that work with `sf`. I often just convert my raster and vector data to tibbles and use the tidyverse tools to do the processing.
+
+The new [Geocomputation with R](https://geocompr.robinlovelace.net) recommend `tmap` because it can handle `sp`, `sf`, and `raster` objects. You will see it’s quite powerful. I encourage you to read the vignettes.
+
+## Approach
+
+After much rearranging and managing projection issues I have found that `crs = 2193` works for all the bits of the figures I would like to use. Below fixes `davidson2020_crs` to `crs = 2193`.
+
+### R libraries needed
+
+```{r eval=TRUE, message=FALSE, warning=FALSE, include=FALSE}
+# all these packages can be installed from cran
+require(sf) # the spatial workhorse
+library(spData) #example spatial data
+library(tidyverse) # for general data wrangling
+library(tmap)    # for static and interactive maps
+library(mapview) # for interactive maps
+library(grid) # for putting multiple plot on top of each other
+library(cowplot) # for arranging multiple ggplots
+library(spDataLarge) # more example spatial data
+
+# sets paths for computers with other software components
+# this code block produces an enviroment warning
+# but not sure how to sort depenancies still
+# Feb2020
+# myPaths <- .libPaths("C:/Program Files/R/R-3.6.2/library")
+# myPaths <- c(myPaths)
+# .libPaths(myPaths)  # add new path
+# .libPaths()
+map.bounds <- tidykml::kml_bounds("./data/research/doc.kml")
+map.info <- tidykml::kml_info("./data/research/doc.kml")
+tidy.kat <- tidykml::kml_points("./data/research/doc.kml")
+tidy.poly <- tidykml::kml_polygons("./data/research/doc.kml")
+tidy.read <- tidykml::kml_read("./data/research/doc.kml")
+
+# st_read("./data/research/doc.kml")
+```
+
+```{r eval=TRUE, message=FALSE, warning=FALSE, include=FALSE}
+#startup only on uni PC
+#Anthony
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+require(SFtools)# load some spatial data. 
+require(sf)
+require(raster)
+require(tidyverse)
+require(mapview)
+require(mapedit)
+require(ggplot2)
+require(tmap)
+require(tmaptools)
+require(spData)
+require(nzsf)  #issues with this.. #other pckages not upto ...datae??
+
+# fro correct projection
+require(sp)
+require(spData)
+davidson2020_crs <- st_crs(spData::nz)
+
+require(spDataLarge)
+```
+
+I will use the new zealand example dataset from `spData`. If you have a csv file with coordinates for points try this general approach and in the points section of this gitbook.
+
+`csvdata <- readr::read_csv(file=`   
+
+**your_filename**
+
+`)`
+
+`sfdata <- sf::st_as_sf(csvdata,` 
+
+and 
+
+`coords = c('xcoords','ycoords'),` 
+
+and then define your
+
+`crs =` `<a_proj4_projection_string>` 
+
+and close the function `)`
+
+```{r echo = TRUE}
+# csvdata <- readr::read_csv(file=<your_filename>)
+# sfdata <- sf::st_as_sf(csvdata,
+#                        coords = c('xcoords','ycoords'),
+#                        crs = <a_proj4_projection_string>)
+```
+
+
+### Study areas {.tabset .tabset-fade .tabset-pills}
+
+For this study we had two independent Valley systems. Example datasets in spData include `nz`. It is a multipolygon simple feature collection of New Zealand.
+
+```
+spData::nz
+## Simple feature collection with 16 features and 6 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: 1090144 ymin: 4748537 xmax: 2089533 ymax: 6191874
+## epsg (SRID):    2193
+## proj4string:    +proj=tmerc +lat_0=0 +lon_0=173 +k=0.9996 +x_0=1600000 +y_0=10000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+```
+
+#### Outline
+
+```{r one-box-plotted, eval=TRUE, message=FALSE, warning=FALSE, include=TRUE, echo = FALSE}
+require(sp)
+require(spData)
+require(tmap)
+require(spDataLarge)
+
+nz_map_data <- spData::nz
+tmap::tm_shape(nz_map_data) + tm_fill()
+# str(nz_map_data)
+```
+
+#### Study location
+
+```{r}
+require(tidyverse)
+require(SFtools)
+require(spData)
+require(spDataLarge)
+require(sf)
+# st_crs(spDataLarge::nz_elev)
+
+NZbeech_grids_gps <- tidy.kat[7:18,] %>%
+    dplyr::select(folder, name, longitude, latitude) %>%
+      transmute(grid = name,
+             valley = factor(folder),
+             lon = longitude,
+             lat = latitude)
+
+plot_valley_gps <- NZbeech_grids_gps %>%
+                st_as_sf(coords = c("lon", "lat"), crs = 4326)
+
+# plot_valley_gps$geometry
+beech_bbox <- plot_valley_gps %>%
+  st_transform(crs = st_crs(nz_elev)) %>%
+  st_bbox(st_crs(nz_map)) %>% st_as_sfc()
+
+beech_bbox_test <- plot_valley_gps %>%
+  st_transform(crs = st_crs(nz_elev)) %>%
+  st_bbox(st_crs(nz_map))
+
+# st_crs(nz_elev)
+big_bbox <- beech_bbox_test
+big_bbox[1] <- beech_bbox_test[1] - 15000
+big_bbox[2] <- beech_bbox_test[2] - 15000
+big_bbox[3] <- beech_bbox_test[3] + 15000
+big_bbox[4] <- beech_bbox_test[4] + 15000
+
+big_bbox <- big_bbox %>% st_as_sfc()
+# beech_bbox
+
+tmap::tm_shape(nz_map_data) + tm_fill() +
+   tm_shape(big_bbox) +  #here we are adding the little inset box on the overview map 
+   tm_borders(lwd = 2, col = "red") 
+```
+
+#### By Valley
+
+```{r eval = FALSE}
+require(tidyverse)
+require(SFtools)
+require(spData)
+require(spDataLarge)
+
+st_crs(spDataLarge::nz_elev)
+
+NZbeech_grids_gps <- tidy.kat[7:18,] %>%
+    dplyr::select(folder, name, longitude, latitude) %>%
+      transmute(grid = name,
+             valley = factor(folder),
+             lon = longitude,
+             lat = latitude)
+
+plot_valley_gps <- NZbeech_grids_gps %>%
+                st_as_sf(coords = c("lon", "lat"), crs = 4326)
+# 
+# %>%
+  st_crs(nzsf::proj_nzsf())
+
+beech_bbox <- plot_valley_gps %>%
+  st_bbox()
+
+mapview::mapview(plot_valley_gps)
+
+
+require(nzsf)
+
+# CRS(nz_elev)
+
+# p_south <- 
+  ggplot() +
+  plot_depth(colour = "lightblue") +
+  plot_marine_reserves(fill = "red", colour = "red") +
+  plot_qma(qma = "CRA", fill = NA)
+  
+  
+  +
+  geom_sf(data = beech_bbox,fill = "darkgreen", colour = NA, size = 0.3, alpha = 0.7)
+  # plot_coast(fill = "darkgreen", colour = NA, size = 0.3, alpha = 0.7) +
+  # annotation_north_arrow(location = "tl", which_north = "true", style = north_arrow_nautical) +
+  # annotation_scale(location = "br", unit_category = "metric") +
+  coord_sf(xlim = qma_CRA7_dat[c(1, 3)], ylim = qma_CRA7_dat[c(2, 4)])
+
+
+
+
+
+plot_valleys_beech<- ggplot() + 
+  
+  geom_sf(data = nzsf::nz_coastlines_and_islands_polygons_topo_1250k) +
+  geom_sf(data = plot_valley_gps, aes(fill = grid, shape = valley, col = grid), size = 4, alpha = 0.5) #+
+  
+  # coord_sf(xlim = beech_bbox[c(1, 3)], ylim = beech_bbox[c(2, 4)])
+
+plot_valley_gps2 <- NZbeech_grids_gps %>% dplyr::select(valley, lat, lon)%>%
+                st_as_sf(coords = c("lon", "lat"), crs = 4193)
+
+
+
+
+
+
+
+
+
+
+###nz snipped section on the nz_hieght crs projection
+nz_snipped_region = st_bbox(c(xmin = 1340000, xmax = 1450000,
+                      ymin = 5130000, ymax = 5210000), 
+crs = st_crs(nz_height)) %>%
+  st_as_sfc()
+
+##############################ploting points on sections
+require(tmap)
+require(tmaptools)
+require(spDataLarge)
+
+ nz_height_map = tm_shape(nz_elev, bbox = nz_snipped_region) + 
+   tm_raster(style = "cont", palette = "YlGn", legend.show = TRUE) + 
+   tm_shape(nz_height) + tm_symbols(shape = 2, col = "red", size = 1) + 
+   tm_scale_bar(position = c("left", "bottom")) 
+ st_crs(nz_height) 
+
+ nz_height_map
+ ## ----08-mapping-18------------------------------------------------------- 
+ nz_map = tm_shape(nz)+ tm_polygons()+ tm_borders(lwd = 3)  + 
+   # tm_shape(nz_height) + tm_symbols(shape = 2, col = "red", size = 0.1) + 
+   tm_shape(egl_bbox)
+
+ nz_map
+ 
+ map_nz = tm_shape(nz) + tm_polygons() 
+ class(nz_map)
+
+#<!-- ## ----08-mapping-16------------------------------------------------------- -->
+# holly_bbox
+plot_holly_valley_gps <- NZbeech_grids_gps %>%
+  filter(valley == "Hollyford Valley") %>%
+                st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+                    st_transform(crs = st_crs(nz_height))
+holly_bbox <- st_bbox(plot_holly_valley_gps)
+
+# egl_bbox
+plot_egl_valley_gps <- NZbeech_grids_gps %>%
+  filter(valley == "Eglinton Valley") %>%
+                st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+                    st_transform(crs = st_crs(nz_height))
+
+egl_bbox <- st_bbox(plot_egl_valley_gps, crs = st_crs(nz_height)) %>%
+  st_as_sfc()
+
+plot(egl_bbox)
+
+
+  # ggplot() +
+ # tm_shape(nz) + 
+map_nz + 
+  geom_sf(data = plot_valley_gps, aes(fill = grid, shape = valley, col = grid), size = 4, alpha = 0.5)
+ 
+ # + 
+  # geom_sf(nz_elev, aes(fill = ))
+
+
+# ggplot() +
+#   geom_sf(data = grid) +
+#   # geom_point(data = datPorts, aes(x = x, y = y), col = "red", size = 2, alpha = 0.6) +
+# 
+#   # geom_sf_label(data = filter(datPorts, Name == "Dunedin"), aes(label = Name), size =4) +
+# 
+#   ggtitle("Otago region grids")
+
+#################EGL VALLEY
+
+nz_height_map = tm_shape(nz_elev, bbox = egl_bbox) + 
+   tm_raster(style = "cont", palette = "YlGn", legend.show = TRUE) + 
+   tm_shape(nz_height) + tm_symbols(shape = 2, col = "red", size = 1) + 
+   tm_scale_bar(position = c("left", "bottom")) 
+```
+
+#### Grid locations
+
+```{r eval = TRUE}
+mapview::mapview(plot_valley_gps)
+
+# tidykml::
+#   kml_coords("./data/research/doc.kml")
+# 
+# tidy.kat[7:18,] %>%
+#     dplyr::select(folder, name, longitude, latitude) %>%
+#       transmute(grid = name,
+#              valley = factor(folder),
+#              lon = longitude,
+#              lat = latitude)
+
+source("./code/NZbeech_crs_2193.R")
+```

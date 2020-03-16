@@ -1,0 +1,16 @@
+book_filename: "Australian Covid19 visualisation"
+language:
+  ui:
+    chapter_name: " "
+output_dir: "docs"
+rmd_files: ["index.Rmd"]
+delete_merged_file: true
+#book_filename: "New Zealand Beech Forest Dynamics"
+#language:
+#  ui:
+#    chapter_name: " "
+#output_dir: "docs"
+#rmd_files: ["index.Rmd", "01-introduction.Rmd"]
+#rmd_files: ["index.Rmd", "01-introduction.Rmd"]
+##rmd_files: ["01-ploting.Rmd"] #this will not work if index functions are not accesi?!?ble
+#rmd_files: ["index.Rmd","01-introduction.Rmd", "03-Material-and-methods.Rmd", "04-Results.Rmd", "05-Discussion.Rmd", "07-references.Rmd"]

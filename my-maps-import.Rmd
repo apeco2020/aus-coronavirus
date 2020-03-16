@@ -1,0 +1,77 @@
+---
+title: "my-maps-import"
+author: "Anthony Davidson"
+date: "08/03/2020"
+output: 
+  rmarkdown::html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# My-maps {#kmldata}
+
+```{r eval = FALSE}
+require(tmap)
+require(tmaptools)
+require(sp)
+require(spData)
+require(tidykml)
+source(here::here("./R/"))
+map.bounds <- tidykml::kml_bounds("./data/nzsealion_observations.kml")
+map.info <- tidykml::kml_info("./data/nzsealion_observations.kml")
+tidy.kat <- tidykml::kml_points("./data/nzsealion_observations.kml")
+tidy.poly <- tidykml::kml_polygons("./data/nzsealion_observations.kml")
+tidy.read <- tidykml::kml_read("./data/nzsealion_observations.kml")
+
+
+# devtools::install_github("")
+require(tidykml)
+#just a single polygon of interest...
+tidykml::kml_info("./data/sealion_area_general.kml")
+#great
+#just to get it now...
+
+NZSL_polygon_range <- tidykml::kml_polygons("./data/sealion_area_general.kml") %>%
+              #need to doo but doesnt work currently
+               # st_transform(crs = 4326) %>%
+                mutate(x = latitude,
+                       y = longitude)
+full_tidy <- dplyr::bind_rows(tidy.kat, tidy.poly) %>%
+              #need to doo but doesnt work currently
+              # st_transform(crs = 4326) %>%
+                mutate(x = latitude,
+                       y = longitude)
+full_tidy_sf <- dplyr::bind_rows(tidy.kat, tidy.poly) %>%
+              #need to doo but doesnt work currently
+              # st_transform(crs = 4326) %>%
+                mutate(x = latitude,
+                       y = longitude) %>%
+                st_as_sf(coords = c("latitude", "longitude"), crs = davidson2020_crs$epsg)
+
+  
+full_tidy_sf_bbox <-  full_tidy_sf %>%
+                  st_bbox()
+
+
+plot(full_tidy_sf$geometry)
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

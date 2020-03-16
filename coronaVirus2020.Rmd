@@ -14,7 +14,6 @@ output:
     toc: TRUE
     number_sections: FALSE
     code_folding: "hide"
-output_dir: "./docs"
 ---
 
 
@@ -46,6 +45,8 @@ library(epuRate)      # Install with devtools: install_github("holtzy/epuRate", 
 ```
 
 Then I explain what is my input data and I load it. Here is how it looks like:
+
+
 ```{r}
 # Show it:
 mtcars %>% head(5)

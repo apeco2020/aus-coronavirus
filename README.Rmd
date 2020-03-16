@@ -3,9 +3,7 @@ title: "README"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   rmarkdown::html_document:
-    toc: TRUE
-    number_sections: FALSE
-  keep_md: yes
+    
 ---
 
 # Visualising Covid19
@@ -15,6 +13,11 @@ A simple interface for coronavirus updates in the context of Australia
 ```{r}
 #child of the analysis??
 ```
+
+-----------------
+Cats...
+
+##
 
 ## Other shiny apps for COVID19
 
