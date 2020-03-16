@@ -1,0 +1,28 @@
+---
+title: "README"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  rmarkdown::html_document:
+    toc: TRUE
+    number_sections: FALSE
+  keep_md: yes
+---
+
+# Visualising Covid19
+
+A simple interface for coronavirus updates in the context of Australia
+
+```{r}
+#child of the analysis??
+```
+
+## Other shiny apps for COVID19
+
+### Example 1
+
+<iframe src="https://shiny.john-coene.com/coronavirus/" width="100%" height="400px"></iframe>
+
+### Example 2
+
+<iframe src="http://www.bcloud.org/e/" width="100%" height="400px"></iframe>
+
