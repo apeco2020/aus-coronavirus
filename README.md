@@ -2,7 +2,7 @@ README
 ================
 16 March 2020
 
-# Visualising Covid19
+# Visualising `Covid19`
 
 A simple interface for coronavirus updates in the context of Australia. This is a simple repository for the generation of maps using my PhD work for the context of Australians in the current Covid19 environment.
 

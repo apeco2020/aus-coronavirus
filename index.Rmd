@@ -1,5 +1,5 @@
 ---
-title: "A reproducible and uncluttered report of coronavirus for Australians"
+title: "A reproducible report of covid-19 spread for Australians"
 author: "[Anthony Davidson](https://github.com/davan690)"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 site: bookdown::bookdown_site
@@ -17,6 +17,12 @@ output:
     code_folding: "hide"
 ---
 
+<br><br>
+
+> The current output of this report is `r format(Sys.time(), '%d %B %Y')`. This doesnt  not garentte the data from the sources are upto date. Feel free to fund this project to insure someone can valiadate this.
+
+ADDITIONALLY: This is NOT a list of what to do. Listen to your local organisations. This website is intended to make it easier to understand the data and associated sources of your informationby linking the simple figure with all the raw information in an open-source structure.
+
 ```{r, message=FALSE, warning=FALSE}
 # sets paths for computers with other software components
 # this code block produces an enviroment warning
@@ -33,9 +39,28 @@ library(rmarkdown)    # You need this library to run this template.
 library(epuRate)      # Install with devtools: install_github("holtzy/epuRate", force=TRUE)
 ```
 
-<br><br>
+# Data sources for COVID19 {.tabset}
+***
 
-> This website produces a single snapshot of current data on coronavirus. It was built with Australian residents in mind with a reproducible format that allows for the same results to be generated for multiple time intervals. This is the current output as of `r format(Sys.time(), '%d %B %Y')`. This is NOT a conpreheshive list of what to do. This website makes it easier to understand the numbers but all the raw information can be found in the resources.
+> This reproducible format allows for the same results to be generated for multiple time intervals. Previously generated reports can beb found in the `github` repository that builds this website.
+
+> This website only produces a single snapshot of the current data within the datasources referenced. It was built with Australian residents in mind. The data is sourced from other open-source projects currently (massive thankyou!!)
+
+## Wuhan-2019-nCoV
+
+[canghailan/Wuhan-2019-nCoV](https://github.com/canghailan/Wuhan-2019-nCoV)
+
+## Cases, provided by JHU CSSE
+
+[Novel Coronavirus (COVID-19) Cases, provided by JHU CSSE](https://github.com/CSSEGISandData/COVID-19)
+
+## Real-time
+
+To use real-time data on the Corona virus epidemic, read from the end points below:
+
+- csv: https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv
+
+- json: https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json
 
 # Shiny apps for COVID19 {.tabset}
 ***

@@ -85,3 +85,9 @@ Australia specific data:
 ## Key figures
 
 The data is accessed from the following sources:
+
+### Estimating spread
+
+Is not easy...
+
+https://science.sciencemag.org/content/early/2020/03/13/science.abb3221/tab-figures-data
