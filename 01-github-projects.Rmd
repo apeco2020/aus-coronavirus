@@ -1,0 +1,76 @@
+---
+title: "Github projects for Covid19"
+author: "[Anthony Davidson](https://github.com/davan690)"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+site: bookdown::bookdown_site
+mail: "dynamicmodellingfromecology@gmail.com"
+# !!! linkedin: "yan-holtz-2477534a"
+twitter: "antsStats"
+github: "apeco2020"
+home: "www.ssnhub.com"
+# !!! You need to provide a logo image here !!! Or just delete the field for no logo
+logo: "logo_gallery.png"
+output:
+  epuRate::epurate:
+    toc: TRUE
+    number_sections: FALSE
+    code_folding: "hide"
+---
+
+# COVID-19 {.tabset}
+
+Since the WHO report in.....
+
+There has been an increase in activity modelling viral dynamics everywhere. This is also the case on the larges software and hosting platform in the world....github.
+
+Overall `github` has created this collection of projects....
+
+
+
+***
+
+## John Coene institute
+
+<iframe src="https://shiny.john-coene.com/coronavirus/" width="100%" height="400px"></iframe>
+
+## `ncov19` package
+
+<iframe src="http://www.bcloud.org/e/" width="100%" height="400px"></iframe>
+
+## COVID-19 Epi Curves
+
+<iframe src="https://simonthelwall.shinyapps.io/covid19/" width="100%" height="400px"></iframe>
+
+Created by Simon Thelwall
+
+## John-Hopkins university
+
+<iframe src="https://ayushpkumar.shinyapps.io/CoronaVirusDashboard/_w_e4c7a489/" width="150%" height="600px"></iframe>
+
+## UK
+
+<iframe src="https://tools.dataatomic.com/shiny/CoronaOutbreak/" width="100%" height="400px"></iframe>
+
+## Switzerland
+
+<iframe src="https://simsc.shinyapps.io/corona/" width="150%" height="400px"></iframe>
+
+## Other `git` repositories
+
+[These sites and new resources are growing by the hour.]("https://github.com/search?l=R&q=covid19&type=Repositories") 
+
+# Data accessed
+***
+
+Australia specific data:
+
+<iframe src="https://covid-19.wileam.com/#/AUS" width="150%" height="400px"></iframe>
+
+## Detailed and live??
+
+<iframe src="https://ayushpkumar.shinyapps.io/CoronaVirusDashboard/_w_e4c7a489/" width="150%" height="400px"></iframe>
+
+
+## Key figures
+
+The data is accessed from the following sources:
