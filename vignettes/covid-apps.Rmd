@@ -1,8 +1,7 @@
 ---
-title: "A reproducible report of covid-19 spread for Australians"
+title: "Covid-19 apps, spread for Australians"
 author: "[Anthony Davidson](https://github.com/davan690)"
 date: "`r format(Sys.time(), '%d %B %Y')`"
-site: bookdown::bookdown_site
 mail: "dynamicmodellingfromecology@gmail.com"
 # !!! linkedin: "yan-holtz-2477534a"
 twitter: "antsStats"
@@ -40,30 +39,22 @@ library(epuRate)      # Install with devtools:
 # devtools::install_github("holtzy/epuRate", force=TRUE)
 ```
 
-# COVID19 
+# Data sources for COVID19 {.tabset}
 ***
-
-Here is my simple take on current `Covid-19 dynamics`.
-
-```{r}
-
-```
-
-## Data sources for COVID19 {.tabset}
 
 > This reproducible format allows for the same results to be generated for multiple time intervals. Previously generated reports can beb found in the `github` repository that builds this website.
 
 > This website only produces a single snapshot of the current data within the datasources referenced. It was built with Australian residents in mind. The data is sourced from other open-source projects currently (massive thankyou!!)
 
-### Wuhan-2019-nCoV
+## Wuhan-2019-nCoV
 
 [canghailan/Wuhan-2019-nCoV](https://github.com/canghailan/Wuhan-2019-nCoV)
 
-### Cases, provided by JHU CSSE
+## Cases, provided by JHU CSSE
 
 [Novel Coronavirus (COVID-19) Cases, provided by JHU CSSE](https://github.com/CSSEGISandData/COVID-19)
 
-### Real-time
+## Real-time
 
 To use real-time data on the Corona virus epidemic, read from the end points below:
 
@@ -71,19 +62,51 @@ To use real-time data on the Corona virus epidemic, read from the end points bel
 
 - json: https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json
 
-Australia specific data:
-
-<iframe src="https://covid-19.wileam.com/#/AUS" width="150%" height="400px"></iframe>
-
-### Detailed and live??
-
-<iframe src="https://ayushpkumar.shinyapps.io/CoronaVirusDashboard/_w_e4c7a489/" width="150%" height="400px"></iframe>
-
-# Graduate resources 
+# Shiny apps for COVID19 {.tabset}
 ***
 
+## John Coene institute
+
+<iframe src="https://shiny.john-coene.com/coronavirus/" width="100%" height="400px"></iframe>
+
+## `ncov19` package
+
+<iframe src="http://www.bcloud.org/e/" width="100%" height="400px"></iframe>
+
+## COVID-19 Epi Curves
+
+<iframe src="https://simonthelwall.shinyapps.io/covid19/" width="100%" height="400px"></iframe>
+
+Created by Simon Thelwall
+
+## John-Hopkins university
+
+<iframe src="https://ayushpkumar.shinyapps.io/CoronaVirusDashboard/_w_e4c7a489/" width="150%" height="600px"></iframe>
+
+## UK
+
+<iframe src="https://tools.dataatomic.com/shiny/CoronaOutbreak/" width="100%" height="400px"></iframe>
+
+## Switzerland
+
+<iframe src="https://simsc.shinyapps.io/corona/" width="150%" height="400px"></iframe>
+
+## Other `git` repositories
+
+[These sites and new resources are growing by the hour.]("https://github.com/search?l=R&q=covid19&type=Repositories") 
+
+# Data accessed
+***
+
+Australia specific data:
+
+<iframe src="https://covid-19.wileam.com/#/AUS" width="100%" height="400px"></iframe>
+
+## Detailed and live??
+
+<iframe src="https://ayushpkumar.shinyapps.io/CoronaVirusDashboard/_w_e4c7a489/" width="100%" height="400px"></iframe>
 
 
-## Key figures {.tabset}
+## Key figures
 
 The data is accessed from the following sources:

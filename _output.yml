@@ -9,7 +9,7 @@ bookdown::gitbook:
     edit: https://github.com/davan690/aus-coronavirus/docs/edit/master/%s
     download: ["pdf", "epub", "mobi", "docx"]
     link-citations: yes
-bibliography: Beech-forests.bib
+#bibliography: Beech-forests.bib
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
@@ -29,3 +29,7 @@ bookdown::html_document2:
    code_folding: show
    df_print: paged
    number_sections: false
+epuRate::epurate: 
+   toc: TRUE
+   number_sections: FALSE
+   code_folding: "hide"
